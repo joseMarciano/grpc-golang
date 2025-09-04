@@ -1,0 +1,16 @@
+//create the addr var
+@host = localhost:50051
+
+### Unary RPC
+GRPC {{host}}/greet.GreetService/Greet
+
+{
+  "firstName": "testing"
+}
+
+### Server Streaming RPC
+GRPC {{host}}/greet.GreetService/GreetManyTimes
+
+{
+  "firstName": "testing"
+}

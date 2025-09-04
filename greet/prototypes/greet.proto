@@ -4,7 +4,7 @@ package greet;
 
 option go_package = "github.com/joseMarciano/grpc/greet/protogen";
 
-message GreetRequest {
+message   GreetRequest {
   string firstName = 1;
 }
 
@@ -14,4 +14,5 @@ message GreetResponse {
 
 service GreetService {
   rpc Greet(GreetRequest) returns (GreetResponse);
+  rpc GreetManyTimes(GreetRequest) returns (stream GreetResponse);
 }
