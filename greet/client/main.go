@@ -18,5 +18,5 @@ func main() {
 	c := protogen.NewGreetServiceClient(conn)
 	doGreet(c)
 	doGreetManyTimes(c)
-
+	doGreetLong(c)
 }
