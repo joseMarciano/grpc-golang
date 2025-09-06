@@ -16,8 +16,8 @@ func main() {
 
 	defer conn.Close()
 	c := protogen.NewGreetServiceClient(conn)
-	//doGreet(c)
-	//doGreetManyTimes(c)
-	//doGreetLong(c)
+	doGreet(c)
+	doGreetManyTimes(c)
+	doGreetLong(c)
 	doGreetEveryone(c)
 }
