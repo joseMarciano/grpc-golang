@@ -3,20 +3,30 @@ package main
 import (
 	"context"
 	"log"
+	"time"
 
 	"github.com/joseMarciano/grpc/greet/protogen"
+	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 )
 
 func doGreet(client protogen.GreetServiceClient) {
-	clientResponse, err := client.Greet(context.Background(), &protogen.GreetRequest{
-		FirstName: "Johna",
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+	clientResponse, err := client.Greet(ctx, &protogen.GreetRequest{
+		FirstName: "John",
 	})
 
 	if err != nil {
 		if e, ok := status.FromError(err); ok {
-			log.Printf("Error message from server: %v", e.Message())
-			log.Printf("Error code from server: %v", e.Code())
+			if e.Code() == codes.InvalidArgument {
+				log.Printf("Client received an error: %v with message: %v", e.Code(), e.Message())
+			}
+
+			if e.Code() == codes.DeadlineExceeded {
+				log.Printf("Client deadline exceeded: %v with message: %v", e.Code(), e.Message())
+			}
+
 			return
 		}
 
